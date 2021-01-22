@@ -1,0 +1,14 @@
+.overview-card {
+    margin: -2% 15% 2% 15%;
+}
+.overview-card .long-space-line{
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+    opacity: 0.25;
+}
+.overview-card .text {
+    text-transform: uppercase!important;
+    font-weight: 400;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    opacity: 0.50;
+}

@@ -1,0 +1,20 @@
+.search-card {
+    height: 40vh;
+    top: 0.5vh;
+}
+
+.search-card .card-body {
+    padding: 4.5rem 13rem 4.5rem 13rem !important;
+    background: #21325B;
+}
+
+.search-card .card-body .searh-heading {
+    font-size: x-large;
+    color: white;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    margin-bottom: 2px;
+} 
+
+.search-button {
+    cursor: pointer;
+}
