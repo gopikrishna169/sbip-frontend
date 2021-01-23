@@ -3,32 +3,49 @@ import "./LandingPage.Container.css";
 import Header from '../../components/header/header'
 import Search from '../../components/search/search'
 import Overview from "../../components/overview/overview";
+import Details from "../../components/details/details";
 import { connect } from 'react-redux';
-import { getTnxbyhashRequest } from '../../store/BlockStore/block.action';
+import { getBlockbyhashRequest, getTxnbyhashRequest } from '../../store/BlockStore/block.action';
 
 class LandingPage extends Component {
     constructor(props) {
         super();
-        this.getTnxbyhash = this.getTnxbyhash.bind(this);
+        this.searchByHash = this.searchByHash.bind(this);
     }
 
-    getTnxbyhash() {
-        this.props.getTnxbyhashRequest({
-            "jsonrpc":"2.0",
-            "method":"eth_getBlockByHash",
-            "params":[
-                "0xad1328d13f833b8af722117afdc406a762033321df8e48c00cd372d462f48169", 
+    componentDidUpdate(prevProps) {
+        if (this.props.block !== prevProps.block) {
+
+        }
+    }
+
+    searchByHash(searchText) {
+        this.props.getBlockbyhashRequest({
+            "jsonrpc": "2.0",
+            "method": "eth_getBlockByHash",
+            "params": [
+                searchText,
                 true
             ],
-            "id":1
+            "id": 1
+        })
+
+        this.props.getTxnbyhashRequest({
+            "jsonrpc": "2.0",
+            "method": "eth_getTransactionByHash",
+            "params": [
+                searchText
+            ],
+            "id": 1
         })
     }
     render() {
         return (
             <Fragment>
                 <Header />
-                <Search />
+                <Search search={this.searchByHash} />
                 <Overview />
+                <Details block={this.props.block ? this.props.block : this.props.transaction} />
             </Fragment>
         );
     }
@@ -36,11 +53,13 @@ class LandingPage extends Component {
 }
 
 const stateToProps = response => ({
-        block : response.blockReducer.block
+    block: response.blockReducer.block,
+    transaction: response.blockReducer.transaction
 })
 
 const dispatchToProps = {
-    getTnxbyhashRequest: getTnxbyhashRequest
+    getBlockbyhashRequest: getBlockbyhashRequest,
+    getTxnbyhashRequest: getTxnbyhashRequest
 }
 
 export default connect(

@@ -6,7 +6,24 @@ import './search.css';
 class Search extends Component {
     constructor(props) {
         super();
+        this.state = {
+            searchText: '',
+        }
+        this.handleSearchText = this.handleSearchText.bind(this);
+        this.searchFunction = this.searchFunction.bind(this);
     }
+
+    handleSearchText = e => {
+        console.log(e)
+        this.setState({
+            searchText: e.target.value
+        });
+    }
+
+    searchFunction() {
+        this.props.search(this.state.searchText);
+    }
+
     render() {
         return (
             <div>
@@ -19,8 +36,9 @@ class Search extends Component {
                                     placeholder="Search by Txn Hash / Block Hash"
                                     aria-label="search"
                                     aria-describedby="basic-addon2"
+                                    onChange={(event) => this.handleSearchText(event)}
                                 />
-                                <InputGroup.Append className='search-button'>
+                                <InputGroup.Append className='search-button' onClick={() => this.searchFunction()}>
                                     <InputGroup.Text id="basic-addon2">Search</InputGroup.Text>
                                 </InputGroup.Append>
                             </InputGroup>

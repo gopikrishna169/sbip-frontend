@@ -5,10 +5,33 @@
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
     opacity: 0.25;
+    width: 90%;
 }
 .overview-card .text {
     text-transform: uppercase!important;
     font-weight: 400;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     opacity: 0.50;
+}
+.overview-card .card-body {
+    display: flex;
+}
+
+.recent {
+    display: flex;
+    margin: 2% 15% 2% 15%;
+}
+
+.recent .recent-block {
+    width: 48%;
+    margin: 0 2% 0 0%;
+}
+
+.recent .recent-txn {
+    width: 48%;
+    margin: 0 0% 0 2%;
+}
+
+label {
+    font-weight: bold;
 }

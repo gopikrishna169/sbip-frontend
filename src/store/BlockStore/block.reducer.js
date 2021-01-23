@@ -1,4 +1,5 @@
-import { action } from "typesafe-actions"
+import { action } from "typesafe-actions";
+import { convertToStandardBlock, convertToStandardTxn } from '../../helpers/utility';
 
 export const initialState = {
     block: {
@@ -7,7 +8,6 @@ export const initialState = {
         gasLimit: '',
         gasUsed: '',
         hash: '',
-        logsBloom: '',
         miner: '',
         mixHash: '',
         nonce: '',
@@ -42,11 +42,27 @@ export const initialState = {
 const BlockReducer = (state = initialState, action) => {
     switch (action.type) {
         case "block/BLOCK_TNX_BY_HASH_SUCCESS": {
-            console.log(action.payload);
-            return Object.assign({}, state,{
-                block: action.payload
+            return Object.assign({}, state, {
+                block: action.payload === undefined ? null : convertToStandardBlock(action.payload),
+                transaction: null
             })
         }
+
+        case "block/TNX_BY_HASH_SUCCESS": {
+            return Object.assign({}, state, {
+                transaction: action.payload === undefined ? null : convertToStandardTxn(action.payload),
+                block: null
+            })
+        }
+
+        case "block/TNX_BY_HASH_ERROR":
+        case "block/BLOCK_TNX_BY_HASH_ERROR":{
+            return Object.assign({}, state, {
+                transaction: state.transaction,
+                block: state.block
+            })
+        }
+
         default: {
             return state;
         }
