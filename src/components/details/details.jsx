@@ -26,7 +26,7 @@ class Details extends Component {
 
     render() {
         let temp = <span />
-        temp = Object.entries(this.props.block).map((item) => {
+        temp = this.props.block && this.props.block !== undefined && Object.entries(this.props.block).map((item) => {
             switch (item[0]) {
                 case "logsbloom":
                     break;
@@ -56,7 +56,7 @@ class Details extends Component {
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="detail-title">
-                            Overview - {this.props.block.difficulty ? 'Block By Hash' : 'Transaction By Hash'}
+                            Overview - {this.props.block && this.props.block !== undefined && this.props.block.difficulty  ? 'Block By Hash' : 'Transaction By Hash'}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

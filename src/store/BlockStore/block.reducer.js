@@ -36,7 +36,18 @@ export const initialState = {
         transactionIndex: '',
         v: '',
         value: ''
-    }
+    },
+    logs: [{
+        address: '',
+        blockHash: '',
+        blockNumber: '',
+        data: '',
+        logIndex: '',
+        removed: false,
+        topics: [],
+        transactionHash: '',
+        transactionIndex: ''
+    }]
 }
 
 const BlockReducer = (state = initialState, action) => {
@@ -55,8 +66,15 @@ const BlockReducer = (state = initialState, action) => {
             })
         }
 
+        case "block/LOG_SUCCESS": {
+            return Object.assign({}, state, {
+                logs: action.payload === undefined ? null : action.payload.splice(0, 10),
+            })
+        }
+
+        case "block/LOG_ERROR":
         case "block/TNX_BY_HASH_ERROR":
-        case "block/BLOCK_TNX_BY_HASH_ERROR":{
+        case "block/BLOCK_TNX_BY_HASH_ERROR": {
             return Object.assign({}, state, {
                 transaction: state.transaction,
                 block: state.block

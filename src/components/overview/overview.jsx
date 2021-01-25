@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
+import Button from 'react-bootstrap/Button'
 import './overview.css';
 
 class Overview extends Component {
@@ -7,6 +8,26 @@ class Overview extends Component {
         super();
     }
     render() {
+        let blockImg = (<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon__inner text-dark">Bk</span></span></div>)
+        let txnImg = (<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon__inner text-dark">Tx</span></span></div>)
+        let recentBlocks = this.props.logs.map((log) => {
+            return (<tr><td>{blockImg}</td><td><div class='bluelight'>{parseInt(log.blockNumber)}</div></td></tr>)
+        })
+        recentBlocks.push(<tr><td colSpan={2}><Button
+            variant="outline-primary"
+            disabled={false}
+            size='sm'
+            block={true}
+        >View all Blocks</Button></td></tr>);
+        let recentTxn = this.props.logs.map((log) => {
+            return (<tr><td>{txnImg}</td><td><div class='bluelight'>{log.transactionHash.substring(0,10) + '...'}</div></td></tr>)
+        })
+        recentTxn.push(<tr><td colSpan={2}><Button
+            variant="outline-primary"
+            disabled={false}
+            size='sm'
+            block={true}
+        >View all Transactions</Button></td></tr>);
         return (
             <div>
                 <div class="card overview-card">
@@ -42,7 +63,7 @@ class Overview extends Component {
                             <label>Latest Blocks</label>
                             <Table>
                                 <tbody>
-                                    <tr></tr>
+                                    {recentBlocks}
                                 </tbody>
                             </Table>
                         </div>
@@ -52,7 +73,7 @@ class Overview extends Component {
                             <label>Latest Transactions</label>
                             <Table>
                                 <tbody>
-                                    <tr></tr>
+                                    {recentTxn}
                                 </tbody>
                             </Table>
                         </div>

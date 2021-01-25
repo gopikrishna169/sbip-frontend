@@ -5,12 +5,19 @@ import Search from '../../components/search/search'
 import Overview from "../../components/overview/overview";
 import Details from "../../components/details/details";
 import { connect } from 'react-redux';
-import { getBlockbyhashRequest, getTxnbyhashRequest } from '../../store/BlockStore/block.action';
+import { getBlockbyhashRequest, getTxnbyhashRequest, getLogRequest } from '../../store/BlockStore/block.action';
 
 class LandingPage extends Component {
     constructor(props) {
         super();
         this.searchByHash = this.searchByHash.bind(this);
+        // this.getLogs = this.getLogs.bind(this);
+        this.getBlockByHash = this.getBlockByHash.bind(this);
+        this.getTxnbyHash = this.getTxnbyHash.bind(this);
+    }
+
+    componentDidMount() {
+        this.getLogs();
     }
 
     componentDidUpdate(prevProps) {
@@ -20,31 +27,54 @@ class LandingPage extends Component {
     }
 
     searchByHash(searchText) {
-        this.props.getBlockbyhashRequest({
-            "jsonrpc": "2.0",
-            "method": "eth_getBlockByHash",
-            "params": [
-                searchText,
-                true
-            ],
-            "id": 1
-        })
-
-        this.props.getTxnbyhashRequest({
-            "jsonrpc": "2.0",
-            "method": "eth_getTransactionByHash",
-            "params": [
-                searchText
-            ],
-            "id": 1
-        })
+        if (searchText !== '') {
+            this.getBlockByHash(searchText);
+            this.getTxnByHash(searchText);
+        }
     }
+
+    getBlockByHash(searchText) {
+        if (searchText !== '') {
+            this.props.getBlockbyhashRequest({
+                "jsonrpc": "2.0",
+                "method": "eth_getBlockByHash",
+                "params": [
+                    searchText,
+                    true
+                ],
+                "id": 1
+            })
+        }
+    }
+
+    getTxnbyHash(searchText) {
+        if (searchText !== '') {
+            this.props.getTxnbyhashRequest({
+                "jsonrpc": "2.0",
+                "method": "eth_getTransactionByHash",
+                "params": [
+                    searchText
+                ],
+                "id": 1
+            })
+        }
+    }
+
+    getLogs() {
+        this.props.getLogRequest({
+            "jsonrpc": "2.0",
+            "method": "eth_getLogs",
+            "params": [],
+            "id": 1
+        });
+    }
+
     render() {
         return (
             <Fragment>
                 <Header />
                 <Search search={this.searchByHash} />
-                <Overview />
+                <Overview logs={this.props.logs} getBlockByHash={this.getBlockByHash} getTxnbyHash={this.getTxnbyHash} />
                 <Details block={this.props.block ? this.props.block : this.props.transaction} />
             </Fragment>
         );
@@ -54,12 +84,14 @@ class LandingPage extends Component {
 
 const stateToProps = response => ({
     block: response.blockReducer.block,
-    transaction: response.blockReducer.transaction
+    transaction: response.blockReducer.transaction,
+    logs: response.blockReducer.logs
 })
 
 const dispatchToProps = {
     getBlockbyhashRequest: getBlockbyhashRequest,
-    getTxnbyhashRequest: getTxnbyhashRequest
+    getTxnbyhashRequest: getTxnbyhashRequest,
+    getLogRequest: getLogRequest
 }
 
 export default connect(

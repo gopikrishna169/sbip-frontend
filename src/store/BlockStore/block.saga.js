@@ -1,7 +1,7 @@
 import { AnyAction } from 'redux';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import BlockAPI from './block.api';
-import  { getBlockbyhashSuccess, getBlockbyhashError, getTxnbyhashSuccess, getTxnbyhashError } from './block.action';
+import  { getBlockbyhashSuccess, getBlockbyhashError, getTxnbyhashSuccess, getTxnbyhashError, getLogSuccess, getLogError } from './block.action';
 
 export function* handleGetBlockByhash(action) {
     try {
@@ -23,9 +23,20 @@ export function* handleGetTxnByhash(action) {
 
 }
 
+export function* handleGetLogs(action) {
+    try {
+        const logs = yield call(BlockAPI.GetLogs, action.payload);
+        yield put(getLogSuccess(logs.result));
+    } catch(e) {
+        yield put(getLogError(e));
+    }
+
+}
+
 export function* BlockSaga() {
 
     yield takeEvery("block/BLOCK_TNX_BY_HASH_REQUEST", handleGetBlockByhash)
     yield takeEvery("block/TNX_BY_HASH_REQUEST", handleGetTxnByhash)
+    yield takeEvery("block/LOG_REQUEST", handleGetLogs)
     
 }

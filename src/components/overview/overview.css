@@ -35,3 +35,17 @@
 label {
     font-weight: bold;
 }
+
+.bluelight {
+    color: #0d6efd;
+    cursor: pointer;
+}
+
+.bluelight:hover {
+    color: #0a58ca;
+    cursor: pointer;
+}
+
+.btn-block.btn-sm {
+    width: 100%;
+}
