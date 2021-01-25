@@ -10,10 +10,9 @@ import { getBlockbyhashRequest, getTxnbyhashRequest, getLogRequest } from '../..
 class LandingPage extends Component {
     constructor(props) {
         super();
-        this.searchByHash = this.searchByHash.bind(this);
-        // this.getLogs = this.getLogs.bind(this);
         this.getBlockByHash = this.getBlockByHash.bind(this);
-        this.getTxnbyHash = this.getTxnbyHash.bind(this);
+        this.getTxnByHash = this.getTxnByHash.bind(this);
+        this.searchByHash = this.searchByHash.bind(this);
     }
 
     componentDidMount() {
@@ -47,7 +46,7 @@ class LandingPage extends Component {
         }
     }
 
-    getTxnbyHash(searchText) {
+    getTxnByHash(searchText) {
         if (searchText !== '') {
             this.props.getTxnbyhashRequest({
                 "jsonrpc": "2.0",

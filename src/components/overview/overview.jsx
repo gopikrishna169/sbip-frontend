@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Charts from '../charts/charts'
 import { Table } from "react-bootstrap";
 import Button from 'react-bootstrap/Button'
 import './overview.css';
@@ -54,7 +55,9 @@ class Overview extends Component {
                                 <div class="text">4314.53 TH</div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4"></div>
+                        <div class="col-md-6 col-lg-4">
+                            <Charts />
+                        </div>
                     </div>
                 </div>
                 <div class='recent'>

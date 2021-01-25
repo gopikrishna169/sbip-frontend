@@ -22,7 +22,8 @@
     "node-sass": "^5.0.0",
     "typesafe-actions": "5.1.0",
     "retry-axios": "2.4.0",
-    "moment": "2.29.1"
+    "moment": "2.29.1",
+    "react-charts": "2.0.0-beta.7"
   },
   "scripts": {
     "start": "react-scripts start",
