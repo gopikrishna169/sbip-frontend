@@ -12,7 +12,8 @@ class Overview extends Component {
         let blockImg = (<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon__inner text-dark">Bk</span></span></div>)
         let txnImg = (<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon__inner text-dark">Tx</span></span></div>)
         let recentBlocks = this.props.logs.map((log) => {
-            return (<tr><td>{blockImg}</td><td><div class='bluelight'>{parseInt(log.blockNumber)}</div></td></tr>)
+            console.log(log);
+            return (<tr><td>{blockImg}</td><td><div class='bluelight'>{(log.blockNumber)}</div></td></tr>)
         })
         recentBlocks.push(<tr><td colSpan={2}><Button
             variant="outline-primary"
